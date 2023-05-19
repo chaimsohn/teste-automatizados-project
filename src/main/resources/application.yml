@@ -1,4 +1,4 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://admin:<password>@testesautomatizadosclus.mpinffi.mongodb.net/testes-unitarios?retryWrites=true&w=majority
+      uri: mongodb+srv://${USER_DB:admin}:${PASSWRD_DB}@testesautomatizadosclus.mpinffi.mongodb.net/${NAME_DB:testes-unitarios}?retryWrites=true&w=majority
