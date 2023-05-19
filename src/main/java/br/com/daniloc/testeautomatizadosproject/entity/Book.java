@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @Builder
 @Document
-public class Books {
+public class Book {
 
     @Id
     private String id;
