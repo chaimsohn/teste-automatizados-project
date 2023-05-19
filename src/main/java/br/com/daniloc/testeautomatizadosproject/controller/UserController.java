@@ -1,5 +1,7 @@
 package br.com.daniloc.testeautomatizadosproject.controller;
 
+import br.com.daniloc.testeautomatizadosproject.model.request.UserRequest;
+import br.com.daniloc.testeautomatizadosproject.model.response.UserResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
