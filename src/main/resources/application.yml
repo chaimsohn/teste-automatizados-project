@@ -2,3 +2,6 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://${USER_DB:admin}:${PASSWRD_DB}@testesautomatizadosclus.mpinffi.mongodb.net/${NAME_DB:testes-unitarios}?retryWrites=true&w=majority
+      auto-index-creation: true
+  application:
+    name: teste-automatizados-project
