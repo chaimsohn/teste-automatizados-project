@@ -21,6 +21,7 @@ public class Book {
     private String resume;
     private String sumary;
     private Double price;
+    private Integer nPages;
     @Indexed(unique = true)
     private String isbn;
     private LocalDate releaseDate;
