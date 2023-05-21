@@ -17,5 +17,9 @@ public class BookService {
     public Mono<Book> save(final BookRequest bookRequest){
         return bookRepository.save(bookMapper.toEntity(bookRequest));
     }
+
+    public Mono<Book> findById(final String id){
+        return bookRepository.findById(id);
+    }
 }
 

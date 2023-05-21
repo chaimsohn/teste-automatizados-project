@@ -14,10 +14,8 @@ public interface BookController {
     ResponseEntity<Mono<Void>> save(@Valid @RequestBody BookRequest bookRequest);
 
     @GetMapping(value = "/{id}")
-    ResponseEntity<Mono<BookResponse>> find(@PathVariable String id);
+    ResponseEntity<Mono<BookResponse>> findById(@PathVariable String id);
 
-    @GetMapping(value = "/{isbn}")
-    ResponseEntity<Mono<BookResponse>> findByIsbn(@PathVariable String isbn);
 
     @GetMapping
     ResponseEntity<Flux<BookResponse>> findAll();

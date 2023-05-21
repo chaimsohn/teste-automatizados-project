@@ -1,6 +1,7 @@
 package br.com.daniloc.testeautomatizadosproject.controller.impl;
 
 import br.com.daniloc.testeautomatizadosproject.controller.BookController;
+import br.com.daniloc.testeautomatizadosproject.mapper.BookMapper;
 import br.com.daniloc.testeautomatizadosproject.model.request.BookRequest;
 import br.com.daniloc.testeautomatizadosproject.model.response.BookResponse;
 import br.com.daniloc.testeautomatizadosproject.service.BookService;
@@ -18,6 +19,7 @@ import reactor.core.publisher.Mono;
 public class BookControllerImpl implements BookController {
 
     private final BookService bookService;
+    private final BookMapper bookMapper;
     @Override
     public ResponseEntity<Mono<Void>> save(final BookRequest bookRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -25,14 +27,11 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
-    public ResponseEntity<Mono<BookResponse>> find(String id) {
-        return null;
+    public ResponseEntity<Mono<BookResponse>> findById(String id) {
+        return ResponseEntity.ok()
+                .body(bookService.findById(id).map(bookMapper :: toResponse));
     }
 
-    @Override
-    public ResponseEntity<Mono<BookResponse>> findByIsbn(String isbn) {
-        return null;
-    }
 
     @Override
     public ResponseEntity<Flux<BookResponse>> findAll() {

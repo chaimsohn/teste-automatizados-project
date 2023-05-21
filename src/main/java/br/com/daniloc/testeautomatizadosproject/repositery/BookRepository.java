@@ -15,4 +15,8 @@ public class BookRepository {
     public Mono<Book> save(final Book book){
         return mongoTemplate.save(book);
     }
+
+    public Mono<Book> findById(String id) {
+        return mongoTemplate.findById(id, Book.class);
+    }
 }

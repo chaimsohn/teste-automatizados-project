@@ -1,6 +1,7 @@
 package br.com.daniloc.testeautomatizadosproject.controller.impl;
 
 import br.com.daniloc.testeautomatizadosproject.controller.UserController;
+import br.com.daniloc.testeautomatizadosproject.mapper.UserMapper;
 import br.com.daniloc.testeautomatizadosproject.model.request.UserRequest;
 import br.com.daniloc.testeautomatizadosproject.model.response.UserResponse;
 import br.com.daniloc.testeautomatizadosproject.service.UserService;
@@ -18,6 +19,7 @@ import reactor.core.publisher.Mono;
 public class UserControllerImpl implements UserController {
 
     private final UserService userService;
+    private final UserMapper userMapper;
     @Override
     public ResponseEntity<Mono<Void>> save(final UserRequest userRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -25,8 +27,9 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<Mono<UserResponse>> find(String id) {
-        return null;
+    public ResponseEntity<Mono<UserResponse>> findById(String id) {
+        return ResponseEntity.ok()
+                .body(userService.findById(id).map(userMapper :: toResponse));
     }
 
     @Override
