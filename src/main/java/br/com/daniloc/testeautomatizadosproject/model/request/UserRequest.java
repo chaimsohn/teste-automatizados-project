@@ -18,6 +18,7 @@ public record UserRequest(
         @TrimString
         @Size(min = 3, max = 50, message = "Deve estar entre 3 e 50 caracteres")
         @NotBlank(message = "Não pode ser vazio ou nulo")
-        String password
+        String password,
+        Integer idade
 ) {
 }

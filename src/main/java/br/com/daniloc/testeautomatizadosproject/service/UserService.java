@@ -7,6 +7,7 @@ import br.com.daniloc.testeautomatizadosproject.repositery.UserRepository;
 import br.com.daniloc.testeautomatizadosproject.service.exception.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static org.hibernate.validator.internal.util.StringHelper.format;
@@ -17,7 +18,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-
     public Mono<User> save(final UserRequest userRequest){
         return userRepository.save(userMapper.toEntity(userRequest));
     }
@@ -29,5 +29,9 @@ public class UserService {
                                 format("Usuário não encontrado. Id: %s, Type: %s", id, User.class.getSimpleName())
                         )
                 ));
+    }
+
+    public Flux<User> findAll(){
+        return userRepository.findAll();
     }
 }

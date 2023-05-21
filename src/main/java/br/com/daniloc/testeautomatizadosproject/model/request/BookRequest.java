@@ -3,7 +3,6 @@ package br.com.daniloc.testeautomatizadosproject.model.request;
 import br.com.daniloc.testeautomatizadosproject.validator.Date;
 import br.com.daniloc.testeautomatizadosproject.validator.MinPrice;
 import br.com.daniloc.testeautomatizadosproject.validator.TrimString;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -23,9 +22,6 @@ public record BookRequest(
         @MinPrice
         Double price,
 
-        @NotNull
-        @Min(value = 100)
-        Integer nPages,
         @TrimString
         @NotBlank(message = "Não pode ser vazio ou nulo")
         String isbn,

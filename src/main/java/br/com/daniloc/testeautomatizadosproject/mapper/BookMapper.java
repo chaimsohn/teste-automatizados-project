@@ -19,5 +19,5 @@ public interface BookMapper {
     @Mapping(target = "id", ignore = true)
     Book toEntity(final BookRequest bookRequest);
 
-    BookResponse toResponse(final Book entity);
+    BookResponse toResponse(final Book bookEntity);
 }

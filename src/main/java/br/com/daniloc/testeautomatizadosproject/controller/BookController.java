@@ -16,7 +16,6 @@ public interface BookController {
     @GetMapping(value = "/{id}")
     ResponseEntity<Mono<BookResponse>> findById(@PathVariable String id);
 
-
     @GetMapping
     ResponseEntity<Flux<BookResponse>> findAll();
 
@@ -25,8 +24,5 @@ public interface BookController {
 
     @DeleteMapping(value = "/{id}")
     ResponseEntity<Mono<Void>> delete(@PathVariable String id);
-
-    @DeleteMapping(value = "/{isbn}")
-    ResponseEntity<Mono<Void>> deleteByIsbn(@PathVariable String isbn);
 }
 

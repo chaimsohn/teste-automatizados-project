@@ -8,7 +8,6 @@ public record BookResponse (
         String resume,
         String sumary,
         Double price,
-        Integer nPages,
         String isbn,
         LocalDate releaseDate
 ) {

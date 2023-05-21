@@ -32,10 +32,11 @@ public class BookControllerImpl implements BookController {
                 .body(bookService.findById(id).map(bookMapper :: toResponse));
     }
 
-
     @Override
     public ResponseEntity<Flux<BookResponse>> findAll() {
-        return null;
+        return ResponseEntity.ok().body(
+                bookService.findAll().map(bookMapper :: toResponse)
+        );
     }
 
     @Override
@@ -45,11 +46,6 @@ public class BookControllerImpl implements BookController {
 
     @Override
     public ResponseEntity<Mono<Void>> delete(String id) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Mono<Void>> deleteByIsbn(String isbn) {
         return null;
     }
 }

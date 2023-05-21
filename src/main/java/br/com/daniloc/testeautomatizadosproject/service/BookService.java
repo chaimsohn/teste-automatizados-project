@@ -7,6 +7,7 @@ import br.com.daniloc.testeautomatizadosproject.repositery.BookRepository;
 import br.com.daniloc.testeautomatizadosproject.service.exception.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static org.hibernate.validator.internal.util.StringHelper.format;
@@ -24,10 +25,14 @@ public class BookService {
     public Mono<Book> findById(final String id){
         return bookRepository.findById(id)
                 .switchIfEmpty(Mono.error(
-                new ObjectNotFoundException(
-                        format("Livro não encontrado. Id: %s, Type: %s", id, Book.class.getSimpleName())
-                )
-        ));
+                        new ObjectNotFoundException(
+                                format("Livro não encontrado. Id: %s, Type: %s", id, Book.class.getSimpleName())
+                        )
+                ));
+    }
+
+    public Flux<Book> findAll(){
+        return bookRepository.findAll();
     }
 }
 

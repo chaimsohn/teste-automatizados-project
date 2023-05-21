@@ -19,5 +19,5 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     User toEntity(final UserRequest userRequest);
 
-    UserResponse toResponse(final User entity);
+    UserResponse toResponse(final User userEntity);
 }

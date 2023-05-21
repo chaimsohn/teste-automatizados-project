@@ -4,6 +4,7 @@ public record UserResponse (
         String id,
         String name,
         String email,
-        String password
+        String password,
+        Integer idade
 ) {
 }
