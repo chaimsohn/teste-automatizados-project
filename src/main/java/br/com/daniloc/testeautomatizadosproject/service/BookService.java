@@ -34,5 +34,11 @@ public class BookService {
     public Flux<Book> findAll(){
         return bookRepository.findAll();
     }
+
+    public Mono<Book> update(final String id, final BookRequest bookRequest){
+        return findById(id)
+                .map(entity -> bookMapper.toEntity(bookRequest, entity))
+                .flatMap(bookRepository::save);
+    }
 }
 

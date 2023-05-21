@@ -41,7 +41,9 @@ public class BookControllerImpl implements BookController {
 
     @Override
     public ResponseEntity<Mono<BookResponse>> update(String id, BookRequest bookRequest) {
-        return null;
+        return ResponseEntity.ok().body(
+                bookService.update(id, bookRequest).map(bookMapper::toResponse)
+        );
     }
 
     @Override
