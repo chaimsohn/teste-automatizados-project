@@ -1,11 +1,16 @@
 package br.com.daniloc.testeautomatizadosproject.model.request;
 
+import br.com.daniloc.testeautomatizadosproject.validator.MinPrice;
+import br.com.daniloc.testeautomatizadosproject.validator.TrimString;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
 public record BookRequest(
+        @TrimString
         @NotBlank(message = "Não pode ser vazio ou nulo")
         String title,
         @Size(min = 20, max = 500, message = "Deve estar entre 20 e 500 caracteres")
@@ -13,9 +18,14 @@ public record BookRequest(
         String resume,
         String sumary,
 
+        @NotNull
+        @MinPrice
         Double price,
 
+        @NotNull
+        @Min(value = 100)
         Integer nPages,
+        @TrimString
         @NotBlank(message = "Não pode ser vazio ou nulo")
         String isbn,
 
