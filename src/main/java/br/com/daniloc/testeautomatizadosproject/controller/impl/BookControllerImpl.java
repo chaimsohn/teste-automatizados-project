@@ -48,6 +48,8 @@ public class BookControllerImpl implements BookController {
 
     @Override
     public ResponseEntity<Mono<Void>> delete(String id) {
-        return null;
+        return ResponseEntity.ok().body(
+                bookService.delete(id).then()
+        );
     }
 }

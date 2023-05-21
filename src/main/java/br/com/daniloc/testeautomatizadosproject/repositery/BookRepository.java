@@ -3,6 +3,8 @@ package br.com.daniloc.testeautomatizadosproject.repositery;
 import br.com.daniloc.testeautomatizadosproject.entity.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -23,5 +25,11 @@ public class BookRepository {
 
     public Flux<Book> findAll() {
         return mongoTemplate.findAll(Book.class);
+    }
+
+    public Mono<Book> findAndRemove(String id) {
+        Query query = new Query();
+        Criteria where = Criteria.where("id").is(id);
+        return mongoTemplate.findAndRemove(query.addCriteria(where), Book.class);
     }
 }

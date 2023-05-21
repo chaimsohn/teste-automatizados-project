@@ -23,12 +23,7 @@ public class BookService {
     }
 
     public Mono<Book> findById(final String id){
-        return bookRepository.findById(id)
-                .switchIfEmpty(Mono.error(
-                        new ObjectNotFoundException(
-                                format("Livro não encontrado. Id: %s, Type: %s", id, Book.class.getSimpleName())
-                        )
-                ));
+        return errorNotFound(bookRepository.findById(id), id);
     }
 
     public Flux<Book> findAll(){
@@ -39,6 +34,18 @@ public class BookService {
         return findById(id)
                 .map(entity -> bookMapper.toEntity(bookRequest, entity))
                 .flatMap(bookRepository::save);
+    }
+
+    public Mono<Book> delete(final String id){
+        return errorNotFound(bookRepository.findAndRemove(id), id);
+    }
+
+    private <T> Mono<T> errorNotFound(Mono<T> mono, String id) {
+        return mono.switchIfEmpty(Mono.error(
+                new ObjectNotFoundException(
+                        format("Livro não encontrado. Id: %s, Type: %s", id, Book.class.getSimpleName())
+                )
+        ));
     }
 }
 
