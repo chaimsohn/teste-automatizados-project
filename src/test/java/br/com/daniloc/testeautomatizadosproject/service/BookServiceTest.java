@@ -1,6 +1,7 @@
 package br.com.daniloc.testeautomatizadosproject.service;
 
 import br.com.daniloc.testeautomatizadosproject.entity.Book;
+import br.com.daniloc.testeautomatizadosproject.entity.User;
 import br.com.daniloc.testeautomatizadosproject.mapper.BookMapper;
 import br.com.daniloc.testeautomatizadosproject.model.request.BookRequest;
 import br.com.daniloc.testeautomatizadosproject.repositery.BookRepository;
@@ -31,7 +32,7 @@ class BookServiceTest {
     private BookService service;
 
     @Test
-    void save() {
+    void testSave() {
         BookRequest request = new BookRequest("Harry Potter", "Text", "1", "23,05", "56", "25/02/2000");
         Book entity = Book.builder().build();
 
@@ -41,10 +42,26 @@ class BookServiceTest {
         Mono<Book> result = service.save(request);
 
         StepVerifier.create(result)
-                .expectNextMatches(Objects::nonNull)
+                .expectNextMatches(book -> book.getClass() == Book.class)
                 .expectComplete()
                 .verify();
 
         Mockito.verify(repository, times(1)).save(any(Book.class));
+    }
+
+    @Test
+    void testFindById() {
+        when(repository.findById(anyString())).thenReturn(Mono.just(Book.builder()
+                .id("123")
+                .build()));
+
+        Mono<Book> result = service.findById("123");
+
+        StepVerifier.create(result)
+                .expectNextMatches(book -> book.getClass() == Book.class)
+                .expectComplete()
+                .verify();
+
+        Mockito.verify(repository, times(1)).findById(anyString());
     }
 }
