@@ -78,4 +78,24 @@ class BookServiceTest {
         Mockito.verify(repository, times(1)).findAll();
     }
 
+    @Test
+    void testUpdate() {
+
+        BookRequest request = new BookRequest("Harry Potter", "Text", "1", "23,05", "56", "25/02/2000");
+        Book entity = Book.builder().build();
+
+        when(mapper.toEntity(any(BookRequest.class), any(Book.class))).thenReturn(entity);
+        when(repository.findById(anyString())).thenReturn(Mono.just(entity));
+        when(repository.save(any(Book.class))).thenReturn(Mono.just(entity));
+
+        Mono<Book> result = service.update("123", request);
+
+        StepVerifier.create(result)
+                .expectNextMatches(book -> book.getClass() == Book.class)
+                .expectComplete()
+                .verify();
+
+        Mockito.verify(repository, times(1)).save(any(Book.class));
+    }
+
 }
