@@ -98,4 +98,21 @@ class BookServiceTest {
         Mockito.verify(repository, times(1)).save(any(Book.class));
     }
 
+    @Test
+    void testDelete() {
+
+        Book entity = Book.builder().build();
+        when(repository.findAndRemove(anyString())).thenReturn(Mono.just(entity));
+
+        Mono<Book> result = service.delete("123");
+
+        StepVerifier.create(result)
+                .expectNextMatches(book -> book.getClass() == Book.class)
+                .expectComplete()
+                .verify();
+
+        Mockito.verify(repository, times(1)).findAndRemove(anyString());
+    }
+
+
 }
