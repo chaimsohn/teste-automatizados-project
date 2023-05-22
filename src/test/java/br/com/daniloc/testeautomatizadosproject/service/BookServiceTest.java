@@ -5,6 +5,8 @@ import br.com.daniloc.testeautomatizadosproject.entity.User;
 import br.com.daniloc.testeautomatizadosproject.mapper.BookMapper;
 import br.com.daniloc.testeautomatizadosproject.model.request.BookRequest;
 import br.com.daniloc.testeautomatizadosproject.repositery.BookRepository;
+import br.com.daniloc.testeautomatizadosproject.service.exception.ObjectNotFoundException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +19,7 @@ import reactor.test.StepVerifier;
 
 import java.util.Objects;
 
+import static org.hibernate.validator.internal.util.StringHelper.format;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -114,5 +117,17 @@ class BookServiceTest {
         Mockito.verify(repository, times(1)).findAndRemove(anyString());
     }
 
+    @Test
+    void testHandleNotFound() {
 
+        when(repository.findById(anyString())).thenReturn(Mono.empty());
+
+        try {
+            service.findById("123").block();
+        }catch (Exception ex) {
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals(format("Livro não encontrado. Id: %s, Type: %s", "123", Book.class.getSimpleName()),
+                    ex.getMessage());
+        }
+    }
 }

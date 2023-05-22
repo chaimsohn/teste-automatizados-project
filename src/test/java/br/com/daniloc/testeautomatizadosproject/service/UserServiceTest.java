@@ -5,6 +5,7 @@ import br.com.daniloc.testeautomatizadosproject.entity.User;
 import br.com.daniloc.testeautomatizadosproject.mapper.UserMapper;
 import br.com.daniloc.testeautomatizadosproject.model.request.UserRequest;
 import br.com.daniloc.testeautomatizadosproject.repositery.UserRepository;
+import br.com.daniloc.testeautomatizadosproject.service.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +18,8 @@ import reactor.test.StepVerifier;
 
 import java.util.Objects;
 
+import static org.hibernate.validator.internal.util.StringHelper.format;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -108,5 +111,19 @@ class UserServiceTest {
                 .verify();
 
         Mockito.verify(repository, times(1)).findAndRemove(anyString());
+    }
+
+    @Test
+    void testHandleNotFound() {
+
+        when(repository.findById(anyString())).thenReturn(Mono.empty());
+
+        try {
+            service.findById("123").block();
+        }catch (Exception ex) {
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals(format("Usuário não encontrado. Id: %s, Type: %s", "123", User.class.getSimpleName()),
+                    ex.getMessage());
+        }
     }
 }
