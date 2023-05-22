@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -51,9 +52,7 @@ class BookServiceTest {
 
     @Test
     void testFindById() {
-        when(repository.findById(anyString())).thenReturn(Mono.just(Book.builder()
-                .id("123")
-                .build()));
+        when(repository.findById(anyString())).thenReturn(Mono.just(Book.builder().build()));
 
         Mono<Book> result = service.findById("123");
 
@@ -64,4 +63,19 @@ class BookServiceTest {
 
         Mockito.verify(repository, times(1)).findById(anyString());
     }
+
+    @Test
+    void testFindAll() {
+        when(repository.findAll()).thenReturn(Flux.just(Book.builder().build()));
+
+        Flux<Book> result = service.findAll();
+
+        StepVerifier.create(result)
+                .expectNextMatches(book -> book.getClass() == Book.class)
+                .expectComplete()
+                .verify();
+
+        Mockito.verify(repository, times(1)).findAll();
+    }
+
 }
