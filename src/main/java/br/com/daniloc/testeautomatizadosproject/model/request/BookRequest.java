@@ -4,7 +4,10 @@ import br.com.daniloc.testeautomatizadosproject.validator.Date;
 import br.com.daniloc.testeautomatizadosproject.validator.MinPrice;
 import br.com.daniloc.testeautomatizadosproject.validator.TrimString;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.time.LocalDate;
 
 public record BookRequest(
         @TrimString
@@ -15,14 +18,15 @@ public record BookRequest(
         String resume,
         String sumary,
 
+        @NotNull
         @MinPrice
-        String price,
+        Double price,
 
         @TrimString
         @NotBlank(message = "Não pode ser vazio ou nulo")
         String isbn,
 
         @Date
-        String releaseDate
+        LocalDate releaseDate
 ) {
 }
