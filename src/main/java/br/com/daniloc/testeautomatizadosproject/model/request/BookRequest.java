@@ -13,6 +13,8 @@ public record BookRequest(
         @Size(min = 20, max = 500, message = "Deve estar entre 20 e 500 caracteres")
         @NotBlank(message = "Não pode ser vazio ou nulo")
         String resume,
+
+        @NotBlank
         String sumary,
 
         @MinPrice
@@ -22,6 +24,7 @@ public record BookRequest(
         @NotBlank(message = "Não pode ser vazio ou nulo")
         String isbn,
 
+        @NotNull
         @Date
         String releaseDate
 ) {
